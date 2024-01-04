@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks'
 import {
   decrement,
   increment,
-  incrementByAmount,
   incrementAsync,
+  incrementByAmount,
   incrementIfOdd,
   selectCount,
-} from './counterSlice';
-import styles from './Counter.module.css';
+} from '../store/counter/counterSlice'
+import styles from '../styles/Counter.module.css'
 
 export function Counter() {
-  const count = useAppSelector(selectCount);
-  const dispatch = useAppDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+  const count = useAppSelector(selectCount)
+  const dispatch = useAppDispatch()
+  const [incrementAmount, setIncrementAmount] = useState('2')
 
-  const incrementValue = Number(incrementAmount) || 0;
+  const incrementValue = Number(incrementAmount) || 0
 
   return (
     <div>
@@ -64,5 +64,5 @@ export function Counter() {
         </button>
       </div>
     </div>
-  );
+  )
 }
