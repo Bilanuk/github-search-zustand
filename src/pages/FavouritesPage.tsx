@@ -1,10 +1,10 @@
-import { Container } from '@mui/material'
+import { Box } from '@mui/material'
 
 function FavouritesPage() {
     return (
-        <Container maxWidth="md" style={{ marginTop: '1rem' }}>
+        <Box>
             <h1>Favourites Page</h1>
-        </Container>
+        </Box>
     )
 }
 

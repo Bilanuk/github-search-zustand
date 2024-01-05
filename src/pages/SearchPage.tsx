@@ -1,10 +1,10 @@
 import { useLazyQuery } from '@apollo/client'
 import { GET_REPOSITORIES } from '../queries'
-import { useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { debounce } from 'lodash'
 import RepositoryCard from '../components/RepositoryCard'
 import { Repository } from '../__generated__/graphql'
-import { Container, TextField } from '@mui/material'
+import { Box, TextField } from '@mui/material'
 
 function SearchPage() {
     const [query, setQuery] = useState<string>('')
@@ -18,7 +18,7 @@ function SearchPage() {
             }
 
             search({ variables: { query: `${searchQuery} in:name` } })
-        }, 1000),
+        }, 500),
         []
     )
 
@@ -28,7 +28,7 @@ function SearchPage() {
     }
 
     return (
-        <Container maxWidth="md" style={{ marginTop: '1rem' }}>
+        <Box>
             <TextField
                 fullWidth
                 label="Search..."
@@ -50,7 +50,7 @@ function SearchPage() {
                     ))}
                 </div>
             )}
-        </Container>
+        </Box>
     )
 }
 
