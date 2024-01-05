@@ -17,6 +17,7 @@
     "@types/react-dom": "^18.2.18",
     "graphiql": "^3.0.10",
     "graphql": "^16.8.1",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.3",
@@ -29,7 +30,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "gql:compile": "graphql-codegen",
+    "gql:watch": "graphql-codegen -w"
   },
   "eslintConfig": {
     "extends": [
@@ -48,5 +51,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@types/lodash": "^4.14.202"
   }
 }
