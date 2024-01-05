@@ -8,6 +8,8 @@ import {
     Typography,
 } from '@mui/material'
 
+import { FavoriteBorderOutlined } from '@mui/icons-material'
+
 interface RepositoryCardProps {
     repository: Repository
 }
@@ -20,23 +22,37 @@ function RepositoryCard({ repository }: RepositoryCardProps) {
                     <CardContent
                         sx={{
                             display: 'flex',
+                            justifyContent: 'space-between',
                             alignItems: 'center',
                             gap: '1rem',
                         }}
                     >
-                        <Avatar
-                            alt="Repository owner avatar"
-                            src={repository.owner.avatarUrl}
-                            sx={{ width: 50, height: 50 }}
-                        />
-                        <Typography
-                            variant="h5"
-                            component="a"
-                            href={repository.url}
-                            sx={{ textDecoration: 'none', color: 'inherit' }}
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '1rem',
+                            }}
                         >
-                            {repository.name}
-                        </Typography>
+                            <Avatar
+                                alt="Repository owner avatar"
+                                src={repository.owner.avatarUrl}
+                                sx={{ width: 50, height: 50 }}
+                            />
+                            <Typography
+                                variant="h5"
+                                component="a"
+                                href={repository.url}
+                                sx={{
+                                    textDecoration: 'none',
+                                    color: 'inherit',
+                                }}
+                            >
+                                {repository.name}
+                            </Typography>
+                        </Box>
+
+                        <FavoriteBorderOutlined />
                     </CardContent>
                 </Box>
                 <Divider />
