@@ -10,7 +10,7 @@ function SearchPage() {
     const [query, setQuery] = useState<string>('')
     const [search, { loading, data }] = useLazyQuery(GET_REPOSITORIES)
 
-    // Define the debounced search function
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedSearch = useCallback(
         debounce((searchQuery: string) => {
             if (searchQuery === '') {
