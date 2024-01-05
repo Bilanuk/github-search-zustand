@@ -15,9 +15,7 @@ function Navbar() {
             <Toolbar sx={{ justifyContent: 'space-between' }}>
                 <StyledLink to="/search">Search</StyledLink>
                 <StyledLink to="/favourites">Favourites</StyledLink>
-                <StyledLink to="/graphiql" target="_blank">
-                    Graphiql
-                </StyledLink>
+                <StyledLink to="/graphiql">Graphiql</StyledLink>
             </Toolbar>
         </AppBar>
     )
