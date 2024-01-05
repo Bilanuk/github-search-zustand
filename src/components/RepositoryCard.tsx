@@ -10,11 +10,19 @@ import {
 
 import { FavoriteBorderOutlined } from '@mui/icons-material'
 
+import { toggleRepository } from '../store/repository/repositorySlice'
+import { useAppDispatch } from '../store/hooks'
+
 interface RepositoryCardProps {
     repository: Repository
 }
 
 function RepositoryCard({ repository }: RepositoryCardProps) {
+    const dispatch = useAppDispatch()
+    const handleToggleRepository = () => {
+        dispatch(toggleRepository(repository))
+    }
+
     return (
         <Card sx={{ minWidth: 275, marginTop: '1rem' }}>
             <CardContent>
@@ -52,7 +60,9 @@ function RepositoryCard({ repository }: RepositoryCardProps) {
                             </Typography>
                         </Box>
 
-                        <FavoriteBorderOutlined />
+                        <FavoriteBorderOutlined
+                            onClick={handleToggleRepository}
+                        />
                     </CardContent>
                 </Box>
                 <Divider />
