@@ -27,12 +27,12 @@ const GET_REPOSITORIES = gql(/* GraphQL */ `
                         color
                     }
                     owner {
-                        ... on User {
-                            name
-                            url
-                            avatarUrl
-                        }
+                        id
+                        login
+                        url
+                        avatarUrl
                     }
+                    isInOrganization
                 }
             }
         }

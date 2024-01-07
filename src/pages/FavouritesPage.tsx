@@ -21,6 +21,7 @@ function FavouritesPage() {
                         <RepositoryCard
                             key={repository.id}
                             repository={repository as Repository}
+                            displayRating={true}
                         />
                     ))}
                 </div>

@@ -1,26 +1,50 @@
-import { Repository } from '../__generated__/graphql'
 import {
     Avatar,
     Box,
     Card,
     CardContent,
     Divider,
+    Rating,
     Typography,
 } from '@mui/material'
 
 import { FavoriteBorderOutlined } from '@mui/icons-material'
+import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp'
 
-import { toggleRepository } from '../store/repository/repositorySlice'
-import { useAppDispatch } from '../store/hooks'
+import {
+    RepositoryWithRating,
+    selectFavouritesRepositories,
+    toggleRepository,
+    updateRepositoryRating,
+} from '../store/repository/repositorySlice'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
 
 interface RepositoryCardProps {
-    repository: Repository
+    repository: RepositoryWithRating
+    displayRating?: boolean
 }
 
-function RepositoryCard({ repository }: RepositoryCardProps) {
+function RepositoryCard({
+    repository,
+    displayRating = false,
+}: RepositoryCardProps) {
     const dispatch = useAppDispatch()
+    const favoritesRepositories = useAppSelector(selectFavouritesRepositories)
+
+    const isFavourite = favoritesRepositories.some(
+        (repo) => repo.id === repository.id
+    )
+
     const handleToggleRepository = () => {
         dispatch(toggleRepository(repository))
+    }
+
+    const handleRatingChange = (value: number | null) => {
+        if (value === null) {
+            return
+        }
+
+        dispatch(updateRepositoryRating({ ...repository, rating: value }))
     }
 
     return (
@@ -39,13 +63,16 @@ function RepositoryCard({ repository }: RepositoryCardProps) {
                             sx={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '1rem',
                             }}
                         >
                             <Avatar
                                 alt="Repository owner avatar"
                                 src={repository.owner.avatarUrl}
-                                sx={{ width: 50, height: 50 }}
+                                sx={{
+                                    width: 50,
+                                    height: 50,
+                                    marginRight: '1rem',
+                                }}
                             />
                             <Typography
                                 variant="h5"
@@ -56,13 +83,49 @@ function RepositoryCard({ repository }: RepositoryCardProps) {
                                     color: 'inherit',
                                 }}
                             >
+                                {repository.owner.login}/
+                            </Typography>
+                            <Typography
+                                variant="h5"
+                                component="a"
+                                href={repository.url}
+                                sx={{
+                                    textDecoration: 'none',
+                                    color: 'inherit',
+                                    fontWeight: 'bold',
+                                }}
+                            >
                                 {repository.name}
                             </Typography>
                         </Box>
 
-                        <FavoriteBorderOutlined
-                            onClick={handleToggleRepository}
-                        />
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'end',
+                                gap: '5px',
+                            }}
+                        >
+                            {isFavourite ? (
+                                <FavoriteSharpIcon
+                                    onClick={handleToggleRepository}
+                                />
+                            ) : (
+                                <FavoriteBorderOutlined
+                                    onClick={handleToggleRepository}
+                                />
+                            )}
+                            {displayRating && (
+                                <Rating
+                                    name="read-only"
+                                    value={repository.rating || null}
+                                    onChange={(event, newValue) =>
+                                        handleRatingChange(newValue)
+                                    }
+                                />
+                            )}
+                        </Box>
                     </CardContent>
                 </Box>
                 <Divider />

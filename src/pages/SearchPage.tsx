@@ -6,6 +6,8 @@ import RepositoryCard from '../components/RepositoryCard'
 import { Repository } from '../__generated__/graphql'
 import { Box, TextField } from '@mui/material'
 
+import CiricularProgress from '@mui/material/CircularProgress'
+
 function SearchPage() {
     const [query, setQuery] = useState<string>('')
     const [search, { loading, data }] = useLazyQuery(GET_REPOSITORIES)
@@ -36,7 +38,7 @@ function SearchPage() {
                 value={query}
                 onChange={(event) => handleInputChange(event.target.value)}
             />
-            {loading && <p>Loading...</p>}
+            {loading && <CiricularProgress />}
             {data && data?.search?.repos?.length === 0 && (
                 <p>No repositories found</p>
             )}
