@@ -1,22 +1,15 @@
 import React from 'react'
-import { AppBar, Toolbar } from '@mui/material'
+import { AppBar, Tab, Tabs } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import styled from '@emotion/styled'
-
-const StyledLink = styled(NavLink)`
-    color: white;
-    text-decoration: none;
-    margin-right: 1rem;
-`
 
 function Navbar() {
     return (
         <AppBar position="static" sx={{ marginBottom: '1rem' }}>
-            <Toolbar sx={{ justifyContent: 'space-between' }}>
-                <StyledLink to="/search">Search</StyledLink>
-                <StyledLink to="/favourites">Favourites</StyledLink>
-                <StyledLink to="/graphiql">Graphiql</StyledLink>
-            </Toolbar>
+            <Tabs centered={true}>
+                <Tab component={NavLink} to="/search" label="Search" />
+                <Tab component={NavLink} to="/favourites" label="Favourites" />
+                <Tab component={NavLink} to="/graphiql" label="Graphiql" />
+            </Tabs>
         </AppBar>
     )
 }

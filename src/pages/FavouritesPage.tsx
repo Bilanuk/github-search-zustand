@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { selectFavouritesRepositories } from '../store/repository/repositorySlice'
 import { useAppSelector } from '../store/hooks'
 import RepositoryCard from '../components/RepositoryCard'
@@ -10,10 +10,22 @@ function FavouritesPage() {
 
     return (
         <Box>
-            <h1>Favourites Page</h1>
-
             {favouritesRepositories.length === 0 && (
-                <p>No favourites repositories</p>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginTop: '200px',
+                    }}
+                >
+                    <Typography
+                        variant="h4"
+                        component="h4"
+                        color="text.secondary"
+                    >
+                        No favourites repositories
+                    </Typography>
+                </Box>
             )}
             {favouritesRepositories.length > 0 && (
                 <div>

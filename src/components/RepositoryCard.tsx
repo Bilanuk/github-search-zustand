@@ -1,15 +1,8 @@
-import {
-    Avatar,
-    Box,
-    Card,
-    CardContent,
-    Divider,
-    Rating,
-    Typography,
-} from '@mui/material'
+import { Avatar, Box, Card, Divider, Rating, Typography } from '@mui/material'
 
 import { FavoriteBorderOutlined } from '@mui/icons-material'
 import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp'
+import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded'
 
 import {
     RepositoryWithRating,
@@ -47,22 +40,36 @@ function RepositoryCard({
         dispatch(updateRepositoryRating({ ...repository, rating: value }))
     }
 
+    const formatDate = (dateString: string) => {
+        const formattedDate = new Date(dateString).toLocaleDateString(
+            undefined,
+            { year: 'numeric', month: 'long', day: 'numeric' }
+        )
+        return formattedDate
+    }
+
     return (
-        <Card sx={{ minWidth: 275, marginTop: '1rem' }}>
-            <CardContent>
+        <Card sx={{ minWidth: 275, marginTop: '1rem' }} variant={'outlined'}>
+            <Box
+                sx={{
+                    padding: '12px',
+                }}
+            >
                 <Box>
-                    <CardContent
+                    <Box
                         sx={{
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
                             gap: '1rem',
+                            padding: '0',
                         }}
                     >
                         <Box
                             sx={{
                                 display: 'flex',
                                 alignItems: 'center',
+                                color: '#2F81F7',
                             }}
                         >
                             <Avatar
@@ -104,11 +111,12 @@ function RepositoryCard({
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'end',
-                                gap: '5px',
+                                gap: '10px',
                             }}
                         >
                             {isFavourite ? (
                                 <FavoriteSharpIcon
+                                    sx={{ color: '#FAAF00' }}
                                     onClick={handleToggleRepository}
                                 />
                             ) : (
@@ -126,23 +134,85 @@ function RepositoryCard({
                                 />
                             )}
                         </Box>
-                    </CardContent>
+                    </Box>
+                </Box>
+                <Box>
+                    <Typography
+                        variant="body2"
+                        color={repository.description ? 'text.primary' : 'gray'}
+                        sx={{ marginTop: '1rem', marginBottom: '1rem' }}
+                    >
+                        {repository.description || 'No description'}
+                    </Typography>
                 </Box>
                 <Divider />
-                <Box>
-                    <CardContent>
-                        {repository.description ? (
-                            <Typography variant="body2" color="text.primary">
-                                {repository.description}
-                            </Typography>
-                        ) : (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        gap: '1rem',
+                        marginTop: '1rem',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '5px',
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    width: 12,
+                                    height: 12,
+                                    borderRadius: '50%',
+                                    backgroundColor:
+                                        repository.primaryLanguage?.color ||
+                                        'gray',
+                                }}
+                            />
                             <Typography variant="body2" color="text.secondary">
-                                No description
+                                {repository.primaryLanguage?.name ||
+                                    'No language'}
                             </Typography>
-                        )}
-                    </CardContent>
+                        </Box>
+                        <Box
+                            sx={{
+                                width: 4,
+                                height: 4,
+                                borderRadius: '50%',
+                                backgroundColor: 'gray',
+                            }}
+                        />
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '5px',
+                            }}
+                        >
+                            <Typography variant="body2" color="text.secondary">
+                                {repository.stargazerCount}
+                            </Typography>
+                            <StarOutlineRoundedIcon
+                                sx={{ color: 'text.secondary' }}
+                            />
+                        </Box>
+                    </Box>
+
+                    <Typography variant="body2" color="text.secondary">
+                        Updated on {formatDate(repository.updatedAt)}
+                    </Typography>
                 </Box>
-            </CardContent>
+            </Box>
         </Card>
     )
 }

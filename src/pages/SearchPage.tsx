@@ -33,12 +33,23 @@ function SearchPage() {
         <Box>
             <TextField
                 fullWidth
-                label="Search..."
+                label="Search repositories"
                 id="fullWidth"
                 value={query}
+                autoComplete={'off'}
                 onChange={(event) => handleInputChange(event.target.value)}
             />
-            {loading && <CiricularProgress />}
+            {loading && (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginTop: '200px',
+                    }}
+                >
+                    <CiricularProgress size={100} color="primary" />
+                </Box>
+            )}
             {data && data?.search?.repos?.length === 0 && (
                 <p>No repositories found</p>
             )}
