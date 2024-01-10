@@ -1,16 +1,15 @@
 import { Box, Typography } from '@mui/material'
-import { selectFavouritesRepositories } from '../store/repository/repositorySlice'
-import { useAppSelector } from '../store/hooks'
 import RepositoryCard from '../components/RepositoryCard'
 import { Repository } from '../__generated__/graphql'
 import React from 'react'
+import { useRepositoryStore } from '../store/repositoryStore'
 
 function FavouritesPage() {
-    const favouritesRepositories = useAppSelector(selectFavouritesRepositories)
+    const repositories = useRepositoryStore((state) => state.repositories)
 
     return (
         <Box>
-            {favouritesRepositories.length === 0 && (
+            {repositories.length === 0 && (
                 <Box
                     sx={{
                         display: 'flex',
@@ -19,17 +18,17 @@ function FavouritesPage() {
                     }}
                 >
                     <Typography
-                        variant="h4"
-                        component="h4"
-                        color="text.secondary"
+                        variant='h4'
+                        component='h4'
+                        color='text.secondary'
                     >
                         No favourites repositories
                     </Typography>
                 </Box>
             )}
-            {favouritesRepositories.length > 0 && (
+            {repositories.length > 0 && (
                 <div>
-                    {favouritesRepositories.map((repository: any) => (
+                    {repositories.map((repository: any) => (
                         <RepositoryCard
                             key={repository.id}
                             repository={repository as Repository}

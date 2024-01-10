@@ -21,7 +21,7 @@ function SearchPage() {
 
             search({ variables: { query: `${searchQuery} in:name` } })
         }, 500),
-        []
+        [],
     )
 
     const handleInputChange = (newQuery: string) => {
@@ -33,8 +33,8 @@ function SearchPage() {
         <Box>
             <TextField
                 fullWidth
-                label="Search repositories"
-                id="fullWidth"
+                label='Search repositories'
+                id='fullWidth'
                 value={query}
                 autoComplete={'off'}
                 onChange={(event) => handleInputChange(event.target.value)}
@@ -47,7 +47,7 @@ function SearchPage() {
                         marginTop: '200px',
                     }}
                 >
-                    <CiricularProgress size={100} color="primary" />
+                    <CiricularProgress size={100} color='primary' />
                 </Box>
             )}
             {data && data?.search?.repos?.length === 0 && (

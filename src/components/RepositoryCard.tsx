@@ -4,13 +4,7 @@ import { FavoriteBorderOutlined } from '@mui/icons-material'
 import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp'
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded'
 
-import {
-    RepositoryWithRating,
-    selectFavouritesRepositories,
-    toggleRepository,
-    updateRepositoryRating,
-} from '../store/repository/repositorySlice'
-import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { RepositoryWithRating, useRepositoryStore } from '../store/repositoryStore'
 
 interface RepositoryCardProps {
     repository: RepositoryWithRating
@@ -18,18 +12,23 @@ interface RepositoryCardProps {
 }
 
 function RepositoryCard({
-    repository,
-    displayRating = false,
-}: RepositoryCardProps) {
-    const dispatch = useAppDispatch()
-    const favoritesRepositories = useAppSelector(selectFavouritesRepositories)
+                            repository,
+                            displayRating = false,
+                        }: RepositoryCardProps) {
+    const repositories = useRepositoryStore((state) => state.repositories)
+    const toggleRepository = useRepositoryStore(
+        (state) => state.toggleRepository,
+    )
+    const updateRepositoryRating = useRepositoryStore(
+        (state) => state.updateRepositoryRating,
+    )
 
-    const isFavourite = favoritesRepositories.some(
-        (repo) => repo.id === repository.id
+    const isFavourite = repositories.some(
+        (repo) => repo.id === repository.id,
     )
 
     const handleToggleRepository = () => {
-        dispatch(toggleRepository(repository))
+        toggleRepository(repository)
     }
 
     const handleRatingChange = (value: number | null) => {
@@ -37,13 +36,13 @@ function RepositoryCard({
             return
         }
 
-        dispatch(updateRepositoryRating({ ...repository, rating: value }))
+        updateRepositoryRating(repository.id, value)
     }
 
     const formatDate = (dateString: string) => {
         const formattedDate = new Date(dateString).toLocaleDateString(
             undefined,
-            { year: 'numeric', month: 'long', day: 'numeric' }
+            { year: 'numeric', month: 'long', day: 'numeric' },
         )
         return formattedDate
     }
@@ -73,7 +72,7 @@ function RepositoryCard({
                             }}
                         >
                             <Avatar
-                                alt="Repository owner avatar"
+                                alt='Repository owner avatar'
                                 src={repository.owner.avatarUrl}
                                 sx={{
                                     width: 50,
@@ -82,8 +81,8 @@ function RepositoryCard({
                                 }}
                             />
                             <Typography
-                                variant="h5"
-                                component="a"
+                                variant='h5'
+                                component='a'
                                 href={repository.url}
                                 sx={{
                                     textDecoration: 'none',
@@ -93,8 +92,8 @@ function RepositoryCard({
                                 {repository.owner.login}/
                             </Typography>
                             <Typography
-                                variant="h5"
-                                component="a"
+                                variant='h5'
+                                component='a'
                                 href={repository.url}
                                 sx={{
                                     textDecoration: 'none',
@@ -126,7 +125,7 @@ function RepositoryCard({
                             )}
                             {displayRating && (
                                 <Rating
-                                    name="read-only"
+                                    name='read-only'
                                     value={repository.rating || null}
                                     onChange={(event, newValue) =>
                                         handleRatingChange(newValue)
@@ -138,7 +137,7 @@ function RepositoryCard({
                 </Box>
                 <Box>
                     <Typography
-                        variant="body2"
+                        variant='body2'
                         color={repository.description ? 'text.primary' : 'gray'}
                         sx={{ marginTop: '1rem', marginBottom: '1rem' }}
                     >
@@ -179,7 +178,7 @@ function RepositoryCard({
                                         'gray',
                                 }}
                             />
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant='body2' color='text.secondary'>
                                 {repository.primaryLanguage?.name ||
                                     'No language'}
                             </Typography>
@@ -199,7 +198,7 @@ function RepositoryCard({
                                 gap: '5px',
                             }}
                         >
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant='body2' color='text.secondary'>
                                 {repository.stargazerCount}
                             </Typography>
                             <StarOutlineRoundedIcon
@@ -208,7 +207,7 @@ function RepositoryCard({
                         </Box>
                     </Box>
 
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant='body2' color='text.secondary'>
                         Updated on {formatDate(repository.updatedAt)}
                     </Typography>
                 </Box>
